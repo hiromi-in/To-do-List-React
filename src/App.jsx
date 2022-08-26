@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./styles.css";
 import { InputTodo } from "./components/InputTodo";
+import {IncompleteTodos} from "./components/IncompleteTodos";
+import {CompleteTodos} from "./components/CompleteTodos";
 
 export const App = () => {
   const [todoText, setTodoText] = useState([""]);
@@ -41,36 +43,17 @@ export const App = () => {
 
   return (
     <>
-    <InputTodo todoText={todoText} onChange={onChangeTodoText} onClick={onClickAdd}/>
-    
-        <div className="incomplete-area">
-        <p className="title">Incomplete task</p>
-        <ul>
-          {incompleteTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={() => onClickComplete(index)}>Complete</button>
-                <button onClick={() => onClickDelete(index)}>Delete</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
-
-      <div className="complete-area">
-        <p className="title">Complete task</p>
-        <ul>
-          {completeTodos.map((todo) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={()=> onClickRevert(index)}>Revert</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
+    <InputTodo 
+     todoText={todoText} 
+     onChange={onChangeTodoText} 
+     onClick={onClickAdd}/>
+    <IncompleteTodos 
+     todos={incompleteTodos} 
+     onClickComplete={onClickComplete} 
+     onClickDelete={onClickDelete}/>
+    <CompleteTodos 
+     todos={completeTodos} 
+     onClickRevert={onClickRevert}/>
     </>
   );
 };
