@@ -7,7 +7,7 @@ export const App = () => {
     "Hey hey",
     "Hey hey hey"
   ]);
-  const [completeDodos, setCompleteDodos] = useState(["Done!"]);
+  const [completeTodos, setCompleteTodos] = useState(["Done!"]);
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const onClickAdd = () => {
@@ -22,6 +22,24 @@ export const App = () => {
     newTodos.splice(index, 1);
     setIncompleteTodos(newTodos);
   };
+  
+  const onClickComplete =(index) => {
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(index, 1);
+    
+    const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
+    setIncompleteTodos(newIncompleteTodos);
+    setCompleteDodos(newCompleteTodos);
+  }
+  
+  const onClickRevert = (index) =>{
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
+    
+    const newIncompleteTodos=[...incompleteTodos, completeTodos[index]];
+    setCompleteTodos(newCompleteTodos);
+    setIncompleteTodos(newIncompleteTodos);    
+  }
 
   return (
     <>
@@ -41,7 +59,7 @@ export const App = () => {
             return (
               <div key={todo} className="list-row">
                 <li>{todo}</li>
-                <button>Complete</button>
+                <button onClick={() => onClickComplete(index)}>Complete</button>
                 <button onClick={() => onClickDelete(index)}>Delete</button>
               </div>
             );
@@ -56,7 +74,7 @@ export const App = () => {
             return (
               <div key={todo} className="list-row">
                 <li>{todo}</li>
-                <button>Revert</button>
+                <button onClick={()=> onClickRevert(index)}>Revert</button>
               </div>
             );
           })}
