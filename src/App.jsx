@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "./styles.css";
+import { InputTodo } from "./components/InputTodo";
 
 export const App = () => {
   const [todoText, setTodoText] = useState([""]);
-  const [incompleteTodos, setIncompleteTodos] = useState([
- 
-  ]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
@@ -42,16 +41,9 @@ export const App = () => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="Type ToDo"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>Add</button>
-      </div>
-
-      <div className="incomplete-area">
+    <InputTodo todoText={todoText} onChange={onChangeTodoText} onClick={onClickAdd}/>
+    
+        <div className="incomplete-area">
         <p className="title">Incomplete task</p>
         <ul>
           {incompleteTodos.map((todo, index) => {
