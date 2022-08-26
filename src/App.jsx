@@ -28,7 +28,7 @@ export const App = () => {
     
     const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
     setIncompleteTodos(newIncompleteTodos);
-    setCompleteDodos(newCompleteTodos);
+    setCompleteTodos(newCompleteTodos);
   }
   
   const onClickRevert = (index) =>{
@@ -69,7 +69,7 @@ export const App = () => {
       <div className="complete-area">
         <p className="title">Complete task</p>
         <ul>
-          {completeDodos.map((todo) => {
+          {completeTodos.map((todo) => {
             return (
               <div key={todo} className="list-row">
                 <li>{todo}</li>
