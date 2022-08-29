@@ -46,7 +46,12 @@ export const App = () => {
     <InputTodo 
      todoText={todoText} 
      onChange={onChangeTodoText} 
-     onClick={onClickAdd}/>
+     onClick={onClickAdd}
+     disabled={incompleteTodos.length >= 5 }/>
+     
+     {incompleteTodos.length >= 5 && 
+     <p style={{color:'red'}}>You can only input 5 todos~ Just complete them first!</p>}
+    
     <IncompleteTodos 
      todos={incompleteTodos} 
      onClickComplete={onClickComplete} 
