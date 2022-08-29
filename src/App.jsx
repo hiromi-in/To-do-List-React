@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./styles.css";
+import { InputTodo } from "./components/InputTodo";
+import {IncompleteTodos} from "./components/IncompleteTodos";
+import {CompleteTodos} from "./components/CompleteTodos";
 
 export const App = () => {
   const [todoText, setTodoText] = useState([""]);
-  const [incompleteTodos, setIncompleteTodos] = useState([
- 
-  ]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
@@ -28,7 +29,7 @@ export const App = () => {
     
     const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
     setIncompleteTodos(newIncompleteTodos);
-    setCompleteDodos(newCompleteTodos);
+    setCompleteTodos(newCompleteTodos);
   }
   
   const onClickRevert = (index) =>{
@@ -42,43 +43,22 @@ export const App = () => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="Type ToDo"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>Add</button>
-      </div>
-
-      <div className="incomplete-area">
-        <p className="title">Incomplete task</p>
-        <ul>
-          {incompleteTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={() => onClickComplete(index)}>Complete</button>
-                <button onClick={() => onClickDelete(index)}>Delete</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
-
-      <div className="complete-area">
-        <p className="title">Complete task</p>
-        <ul>
-          {completeDodos.map((todo) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={()=> onClickRevert(index)}>Revert</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
+    <InputTodo 
+     todoText={todoText} 
+     onChange={onChangeTodoText} 
+     onClick={onClickAdd}
+     disabled={incompleteTodos.length >= 5 }/>
+     
+     {incompleteTodos.length >= 5 && 
+     <p style={{color:'red'}}>You can only input 5 todos~ Just complete them first!</p>}
+    
+    <IncompleteTodos 
+     todos={incompleteTodos} 
+     onClickComplete={onClickComplete} 
+     onClickDelete={onClickDelete}/>
+    <CompleteTodos 
+     todos={completeTodos} 
+     onClickRevert={onClickRevert}/>
     </>
   );
 };
